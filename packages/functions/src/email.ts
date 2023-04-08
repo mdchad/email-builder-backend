@@ -47,7 +47,7 @@ export const handler = ApiHandler(async (_evt) => {
   );
 
   try {
-    const data = await sesClient.send(sendEmailCommand);
+    await sesClient.send(sendEmailCommand);
   } catch (e) {
     console.error("Failed to send email.");
   }

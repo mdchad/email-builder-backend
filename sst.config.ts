@@ -5,7 +5,7 @@ export default {
   config(_input) {
     return {
       name: "email-builder",
-      region: "us-east-1",
+      region: "ap-southeast-1",
     };
   },
   stacks(app) {

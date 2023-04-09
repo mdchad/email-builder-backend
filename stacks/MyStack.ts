@@ -5,9 +5,11 @@ export function API({ stack, app }: StackContext) {
   const table = new Table(stack, "Templates", {
     fields: {
       templateId: "string",
+      username: "string",
+      name: "string",
       data: "string"
     },
-    primaryIndex: { partitionKey: "templateId" },
+    primaryIndex: { partitionKey: "username" },
   });
 
   const api = new Api(stack, "api", {
@@ -27,14 +29,14 @@ export function API({ stack, app }: StackContext) {
               // From AWS's SES console. You'll find a copy-pastable ARN
               // under "Verified identities"
               "arn:aws:ses:ap-southeast-1:391537862305:identity/support@pixelmindstudio.co",
-              "arn:aws:ses:ap-southeast-1:391537862305:identity/irsyad.muhd@gmail.com"
+              "arn:aws:ses:ap-southeast-1:391537862305:identity/dev@pixelmindstudio.co"
             ],
           }),
         ]
       },
     },
     routes: {
-      "GET /": "packages/functions/src/lambda.handler",
+      "GET /": "packages/functions/src/list.handler",
       "POST /": "packages/functions/src/create.handler",
       "POST /email": "packages/functions/src/email.handler",
     },

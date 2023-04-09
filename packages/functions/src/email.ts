@@ -42,7 +42,7 @@ export const handler = ApiHandler(async (_evt) => {
   };
 
   const sendEmailCommand = createSendEmailCommand(
-    "irsyad.muhd@gmail.com",
+    "dev@pixelmindstudio.co",
     "support@pixelmindstudio.co"
   );
 

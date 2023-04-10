@@ -2,14 +2,15 @@ import { StackContext, Api, Table } from "sst/constructs";
 import * as iam from "aws-cdk-lib/aws-iam";
 
 export function API({ stack, app }: StackContext) {
-  const table = new Table(stack, "Templates", {
+  const table = new Table(stack, "TemplatesV2", {
     fields: {
       templateId: "string",
       username: "string",
       name: "string",
-      data: "string"
+      data: "string",
+      createdAt: "number"
     },
-    primaryIndex: { partitionKey: "username" },
+    primaryIndex: { partitionKey: "templateId" },
   });
 
   const api = new Api(stack, "api", {

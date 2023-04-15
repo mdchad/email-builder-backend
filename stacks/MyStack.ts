@@ -1,4 +1,4 @@
-import { StackContext, Api, Table } from "sst/constructs";
+import {StackContext, Api, Table, StaticSite} from "sst/constructs";
 import * as iam from "aws-cdk-lib/aws-iam";
 
 export function API({ stack, app }: StackContext) {
@@ -39,10 +39,22 @@ export function API({ stack, app }: StackContext) {
     routes: {
       "GET /": "packages/functions/src/list.handler",
       "POST /": "packages/functions/src/create.handler",
-      "POST /email": "packages/functions/src/email.handler",
+      "DELETE /{id}": "packages/functions/src/delete.handler",
+      "POST /email": "packages/functions/src/email.handler"
     },
   });
+
+  const web = new StaticSite(stack, "web", {
+    path: "packages/web",
+    buildOutput: "build",
+    buildCommand: "npm run build",
+    environment: {
+      REACT_APP_API_URL: api.url
+    },
+  });
+
   stack.addOutputs({
     ApiEndpoint: api.url,
+    SiteUrl: web.url
   });
 }

@@ -8,7 +8,8 @@ const client = new DynamoDBClient({ region: "ap-southeast-1" });
 
 interface TemplateBody {
   name: string;
-  data: object
+  data: object;
+  templateId: string
 }
 
 export const handler = ApiHandler(async (_evt) => {
@@ -19,12 +20,13 @@ export const handler = ApiHandler(async (_evt) => {
     // Get the table name from the environment variable
     TableName: Table.TemplatesV2.tableName,
     Item: {
-      "templateId": { S: uuid.v1() },
+      "templateId": { S: parsedBody.templateId ? parsedBody.templateId : uuid.v1() },
       "username": { S: "irsyad" },
       "name": { S: parsedBody.name },
       "data": { S: JSON.stringify(parsedBody.data) },
       "createdAt": { N: Date.now().toString() },
     },
+    ReturnValues: "ALL_OLD"
   };
 
   const command = new PutItemCommand(params);

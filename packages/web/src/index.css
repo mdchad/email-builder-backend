@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#editor-2{
+  height: calc(100vh - 66px);
+}
